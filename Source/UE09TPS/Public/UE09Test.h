@@ -38,6 +38,8 @@ public:
 	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "UE09")
 	float Foo();
 
+	
+
 
 
 

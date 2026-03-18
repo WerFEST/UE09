@@ -1,5 +1,6 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
+using System.Numerics;
 using UnrealBuildTool;
 
 public class UE09TPS : ModuleRules
@@ -25,7 +26,7 @@ public class UE09TPS : ModuleRules
 
 		PublicIncludePaths.AddRange(new string[] {
 			"UE09TPS"
-		});
+        });
 
 
 
