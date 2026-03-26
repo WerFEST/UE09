@@ -1,0 +1,25 @@
+{
+	"FileVersion": 3,
+	"Version": 1,
+	"VersionName": "1.0",
+	"FriendlyName": "MyVSPlugin",
+	"Description": "asdasdasdas.",
+	"Category": "",
+	"CreatedBy": "sadasdas",
+	"CreatedByURL": "",
+	"DocsURL": "",
+	"MarketplaceURL": "",
+	"SupportURL": "",
+	"CanContainContent": false,
+	"IsBetaVersion": true,
+	"Installed": false,
+	"Modules": [
+	{
+		"Name": "MyVSPlugin",
+		"Type": "Runtime",
+		"LoadingPhase": "Default"
+	}],
+	"Plugins": [
+	]
+}
+
