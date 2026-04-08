@@ -8,31 +8,19 @@
 
 
 /** Main log category used across the project */
-DECLARE_LOG_CATEGORY_EXTERN(LogUE09TPS, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN( LogUE09TPS, Log, All );
 
 
-USTRUCT(BlueprintType)
+/** Health Delegates **/
+DECLARE_DYNAMIC_MULTICAST_DELEGATE( FOnDeathSignature );
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams( FOnHealthChangedSignature, float, Health, float, HealthDelta );
+
+
+USTRUCT( BlueprintType )
 struct FTestStats
 {
 	GENERATED_BODY()
 
 public:
-
-	FTestStats() : Health(100.0f), Stamina(100.0f), Level(1)
-	{
-	}
-
-	UPROPERTY()
-	float Health;
-
-	UPROPERTY()
-	float Stamina;
-
-	UPROPERTY()
-	int32 Level;
-
-
-
-
 
 };

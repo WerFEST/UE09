@@ -1,0 +1,44 @@
+---
+# Unreal Engine
+SortIncludes: false
+StatementMacros: ['UPROPERTY', 'UFUNCTION', 'UCLASS', 'USTRUCT', 'UENUM', 'UINTERFACE', 'GENERATED_BODY']
+
+# General
+Language: Cpp
+BasedOnStyle: LLVM
+IndentWidth: 4
+UseTab: Always
+TabWidth: 4
+ColumnLimit: 120
+AccessModifierOffset: -4
+
+# Brackets style
+BreakBeforeBraces: Allman
+PointerAlignment: Left
+
+# Spacers
+IndentCaseLabels: true
+
+# Comments
+AlignTrailingComments:
+	Kind: Always
+SpacesInLineCommentPrefix:
+	Minimum: 1
+
+# Brackets
+AlignAfterOpenBracket: Align
+BreakInheritanceList: AfterComma
+SpacesInSquareBrackets: true
+SpacesInParentheses: true
+SpacesInContainerLiterals: true
+SpaceInEmptyParentheses: false
+
+# Templates
+AlwaysBreakTemplateDeclarations: true
+
+# Empty Lines
+MaxEmptyLinesToKeep: 4
+AllowShortFunctionsOnASingleLine: Empty
+KeepEmptyLinesAtEOF: true
+EmptyLineAfterAccessModifier: Always
+EmptyLineBeforeAccessModifier: Always
