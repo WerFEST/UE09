@@ -26,8 +26,22 @@ public:
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	/** Multiplayer **/
+	UFUNCTION(Server, Reliable)
+	void Server_ActivatePlatformTrigger(class APlatformTrigger* PlatformTrigger, bool bIsActivated);
+
+	UFUNCTION(Client, Reliable)
+	void Client_ActivatePlatformTrigger(class APlatformTrigger* PlatformTrigger, bool bIsActivated);
+	/** End Multiplayer **/
+
 protected:
 	virtual void BeginPlay() override;
+
+	UFUNCTION()
+	void OnDeath();
+
+	UFUNCTION()
+	void HealthChanged( float Health, float HealthDelta ); 
 
 private:
 

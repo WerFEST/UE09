@@ -4,6 +4,7 @@
 #include "Player/UE09BaseCharacter.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Dev/PlatformTrigger.h"
 
 
 //
@@ -42,6 +43,30 @@ void AUE09BaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	HealthComponent->InitHealthComponent();
+
+	HealthComponent->OnDeath.AddDynamic( this, &AUE09BaseCharacter::OnDeath );
+	HealthComponent->OnHealthChanged.AddDynamic( this, &AUE09BaseCharacter::HealthChanged );
+
+}
+
+
+//
+void AUE09BaseCharacter::OnDeath() 
+{
+	GetCharacterMovement()->DisableMovement();
+	GetCapsuleComponent()->SetCollisionResponseToAllChannels( ECollisionResponse::ECR_Ignore );
+
+	GetMesh()->SetCollisionEnabled( ECollisionEnabled::QueryAndPhysics );
+	GetMesh()->SetSimulatePhysics( true );
+
+}
+
+
+//
+void AUE09BaseCharacter::HealthChanged( float Health, float HealthDelta ) 
+{
+
 }
 
 
@@ -49,6 +74,22 @@ void AUE09BaseCharacter::BeginPlay()
 void AUE09BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
+
+}
+
+
+//
+void AUE09BaseCharacter::Server_ActivatePlatformTrigger_Implementation(APlatformTrigger* PlatformTrigger, bool bIsActivated)
+{
+	PlatformTrigger->Multicast_SetIsActivated(bIsActivated);
+
+}
+
+
+//
+void AUE09BaseCharacter::Client_ActivatePlatformTrigger_Implementation(APlatformTrigger* PlatformTrigger, bool bIsActivated)
+{
+	PlatformTrigger->SetIsActivated(bIsActivated);
 
 }
 
