@@ -4,10 +4,14 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-#include "Components/UE09WeaponComponent.h"
-#include "Components/UE09HealthComponent.h"
+//#include "Components/UE09WeaponComponent.h"
+//#include "Components/UE09HealthComponent.h"
 
 #include "UE09BaseCharacter.generated.h"
+
+
+class UUE09WeaponComponent;
+class UUE09HealthComponent;
 
 
 DECLARE_LOG_CATEGORY_EXTERN(LogBaseCharacter, Log, All);

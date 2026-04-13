@@ -5,6 +5,8 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Dev/PlatformTrigger.h"
+#include "Components/UE09WeaponComponent.h"
+#include "Components/UE09HealthComponent.h"
 
 
 //

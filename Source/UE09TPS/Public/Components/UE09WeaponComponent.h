@@ -4,10 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "Components/ActorComponent.h"
+#include "Player/UE09BaseCharacter.h"
 #include "UE09WeaponComponent.generated.h"
 
 
-class AUE09BaseCharacter;
 class AUE09BaseWeapon;
 
 

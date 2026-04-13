@@ -90,12 +90,35 @@ void AUE09PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 		// Looking
 		EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &AUE09PlayerCharacter::Look);
+
+		// Zooming
+		EnhancedInputComponent->BindAction( ZoomAction, ETriggerEvent::Started, this, &AUE09PlayerCharacter::Zoom, true );
+		EnhancedInputComponent->BindAction( ZoomAction, ETriggerEvent::Completed, this, &AUE09PlayerCharacter::Zoom, false );
 	
 	}
 	else
 	{
 		UE_LOG(LogPlayerCharacter, Error, TEXT("'%s' Failed to find an Enhanced Input component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
 	
+	}
+
+}
+
+
+//
+void AUE09PlayerCharacter::Zoom( bool bIsZooming ) 
+{
+	if (bIsZooming)
+	{
+		bUseControllerRotationYaw = true;
+		FollowCamera->SetFieldOfView( 60.0f );
+
+	}
+	else
+	{
+		bUseControllerRotationYaw = false;
+		FollowCamera->SetFieldOfView( 90.0f );
+
 	}
 
 }

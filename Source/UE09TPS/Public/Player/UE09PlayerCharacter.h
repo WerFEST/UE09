@@ -47,6 +47,8 @@ protected:
 	/** Initialize input action bindings */
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	void Zoom( bool bIsZooming );
+
 
 private:
 
@@ -72,6 +74,10 @@ protected:
 	/** Mouse Look Input Action */
 	UPROPERTY(EditAnywhere, Category = "UE09|Input")
 	UInputAction* MouseLookAction;
+
+	/** Mouse Look Input Action */
+	UPROPERTY( EditAnywhere, Category = "UE09|Input" )
+	UInputAction* ZoomAction;
 
 	/** Input Mapping Contexts */
 	UPROPERTY(EditAnywhere, Category = "Input|Input Mappings")
