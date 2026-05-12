@@ -5,6 +5,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Camera/CameraComponent.h"
 #include "EnhancedInputComponent.h"
+#include "Components/UE09WeaponComponent.h"
 
 
 DEFINE_LOG_CATEGORY(LogPlayerCharacter);
@@ -95,6 +96,14 @@ void AUE09PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 		EnhancedInputComponent->BindAction( ZoomAction, ETriggerEvent::Started, this, &AUE09PlayerCharacter::Zoom, true );
 		EnhancedInputComponent->BindAction( ZoomAction, ETriggerEvent::Completed, this, &AUE09PlayerCharacter::Zoom, false );
 	
+		// Shooting
+		EnhancedInputComponent->BindAction( ShotAction, ETriggerEvent::Started, this, &AUE09PlayerCharacter::StartFire );
+		EnhancedInputComponent->BindAction( ShotAction, ETriggerEvent::Completed, this, &AUE09PlayerCharacter::StopFire );
+
+		// Next Weapon
+		EnhancedInputComponent->BindAction( NextWeaponAction, ETriggerEvent::Started, this,
+											&AUE09PlayerCharacter::NextWeapon );
+
 	}
 	else
 	{
@@ -121,4 +130,29 @@ void AUE09PlayerCharacter::Zoom( bool bIsZooming )
 
 	}
 
+}
+
+
+//
+void AUE09PlayerCharacter::StartFire()
+{
+	bUseControllerRotationYaw = true;
+	WeaponComponent->StartFire();
+
+}
+
+
+//
+void AUE09PlayerCharacter::StopFire() 
+{
+	bUseControllerRotationYaw = false;
+	WeaponComponent->StopFire();
+
+}
+
+
+//
+void AUE09PlayerCharacter::NextWeapon()
+{
+	WeaponComponent->NextWeapon();
 }

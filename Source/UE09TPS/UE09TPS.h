@@ -16,11 +16,17 @@ DECLARE_DYNAMIC_MULTICAST_DELEGATE( FOnDeathSignature );
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams( FOnHealthChangedSignature, float, Health, float, HealthDelta );
 
 
+
+// AmmoData
 USTRUCT( BlueprintType )
-struct FTestStats
+struct FAmmoData
 {
 	GENERATED_BODY()
 
-public:
+	UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = "UE09|Weapon" )
+	int32 Bullets;
+
+	UPROPERTY( EditDefaultsOnly, BlueprintReadWrite, Category = "UE09|Weapon" )
+	int32 Clips;
 
 };

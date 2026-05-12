@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
-//#include "Components/UE09WeaponComponent.h"
-//#include "Components/UE09HealthComponent.h"
+// #include "Components/UE09WeaponComponent.h"
+// #include "Components/UE09HealthComponent.h"
 
 #include "UE09BaseCharacter.generated.h"
 
@@ -14,7 +14,7 @@ class UUE09WeaponComponent;
 class UUE09HealthComponent;
 
 
-DECLARE_LOG_CATEGORY_EXTERN(LogBaseCharacter, Log, All);
+DECLARE_LOG_CATEGORY_EXTERN( LogBaseCharacter, Log, All );
 
 
 UCLASS()
@@ -26,26 +26,31 @@ class UE09TPS_API AUE09BaseCharacter : public ACharacter
 	/** METHODS **/
 
 public:
+
 	AUE09BaseCharacter();
 
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	virtual void SetupPlayerInputComponent( class UInputComponent* PlayerInputComponent ) override;
+
+	UFUNCTION( BlueprintCallable )
+	bool GetAimPoint( FHitResult& HitResult, FVector& OutPoint, float MaxDistance ) const;
 
 	/** Multiplayer **/
-	UFUNCTION(Server, Reliable)
-	void Server_ActivatePlatformTrigger(class APlatformTrigger* PlatformTrigger, bool bIsActivated);
+	UFUNCTION( Server, Reliable )
+	void Server_ActivatePlatformTrigger( class APlatformTrigger* PlatformTrigger, bool bIsActivated );
 
-	UFUNCTION(Client, Reliable)
-	void Client_ActivatePlatformTrigger(class APlatformTrigger* PlatformTrigger, bool bIsActivated);
+	UFUNCTION( Client, Reliable )
+	void Client_ActivatePlatformTrigger( class APlatformTrigger* PlatformTrigger, bool bIsActivated );
 	/** End Multiplayer **/
 
 protected:
+
 	virtual void BeginPlay() override;
 
 	UFUNCTION()
 	void OnDeath();
 
 	UFUNCTION()
-	void HealthChanged( float Health, float HealthDelta ); 
+	void HealthChanged( float Health, float HealthDelta );
 
 private:
 
@@ -55,12 +60,12 @@ private:
 public:
 
 protected:
-	UPROPERTY(EditDefaultsOnly)
+
+	UPROPERTY( EditDefaultsOnly )
 	UUE09WeaponComponent* WeaponComponent;
 
-	UPROPERTY(EditDefaultsOnly)
+	UPROPERTY( EditDefaultsOnly )
 	UUE09HealthComponent* HealthComponent;
 
 private:
-
 };

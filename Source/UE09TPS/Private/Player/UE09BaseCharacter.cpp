@@ -50,6 +50,7 @@ void AUE09BaseCharacter::BeginPlay()
 	HealthComponent->OnDeath.AddDynamic( this, &AUE09BaseCharacter::OnDeath );
 	HealthComponent->OnHealthChanged.AddDynamic( this, &AUE09BaseCharacter::HealthChanged );
 
+	WeaponComponent->InitWeaponComponent();
 }
 
 
@@ -78,6 +79,39 @@ void AUE09BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputC
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 
 }
+
+
+//
+bool AUE09BaseCharacter::GetAimPoint( FHitResult& HitResult, FVector& OutPoint, float MaxDistance ) const
+{
+	APlayerController* lController = GetController<APlayerController>();
+	if ( !lController )
+		return false;
+
+	FVector lViewLocation;
+	FRotator lViewRotation;
+	lController->GetPlayerViewPoint( lViewLocation, lViewRotation );
+
+	FVector lAimDirection = lViewRotation.Vector();
+	FVector lTraceEnd = lViewLocation + lAimDirection * MaxDistance;
+
+	FHitResult lHit;
+	FCollisionQueryParams lParams;
+	lParams.AddIgnoredActor( this );
+
+	if (GetWorld()->LineTraceSingleByChannel(lHit, lViewLocation, lTraceEnd, ECC_Visibility, lParams))
+	{
+		HitResult = lHit;
+		OutPoint = lHit.Location;
+		return true;
+
+	}
+
+	OutPoint = lTraceEnd;
+	return true;
+
+}
+
 
 
 //

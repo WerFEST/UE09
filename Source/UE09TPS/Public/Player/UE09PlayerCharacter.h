@@ -49,6 +49,11 @@ protected:
 
 	void Zoom( bool bIsZooming );
 
+	void StartFire();
+	void StopFire();
+
+	void NextWeapon();
+
 
 private:
 
@@ -75,9 +80,17 @@ protected:
 	UPROPERTY(EditAnywhere, Category = "UE09|Input")
 	UInputAction* MouseLookAction;
 
-	/** Mouse Look Input Action */
+	/** Zoom Input Action */
 	UPROPERTY( EditAnywhere, Category = "UE09|Input" )
 	UInputAction* ZoomAction;
+
+	/** Shoot Input Action */
+	UPROPERTY( EditAnywhere, Category = "UE09|Input" )
+	UInputAction* ShotAction;
+
+	/** Next Weapon Input Action */
+	UPROPERTY( EditAnywhere, Category = "UE09|Input" )
+	UInputAction* NextWeaponAction;
 
 	/** Input Mapping Contexts */
 	UPROPERTY(EditAnywhere, Category = "Input|Input Mappings")

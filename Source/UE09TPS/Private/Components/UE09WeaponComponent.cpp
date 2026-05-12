@@ -37,7 +37,7 @@ void UUE09WeaponComponent::InitWeaponComponent()
 
 	SpawnWeapon();
 
-	EquipWeapon();
+	EquipWeapon( CurrentWeaponIndex );
 
 
 }
@@ -46,7 +46,7 @@ void UUE09WeaponComponent::InitWeaponComponent()
 //
 void UUE09WeaponComponent::StartFire() 
 {
-	if ( CurrentWeapon )
+	if ( !CurrentWeapon )
 	{
 		return;
 
@@ -60,7 +60,7 @@ void UUE09WeaponComponent::StartFire()
 //
 void UUE09WeaponComponent::StopFire() 
 {
-	if ( CurrentWeapon )
+	if ( !CurrentWeapon )
 	{
 		return;
 	}
@@ -79,26 +79,57 @@ void UUE09WeaponComponent::Reload()
 	}
 
 	CurrentWeapon->Reload();
+
 }
 
 
 //
 void UUE09WeaponComponent::NextWeapon() 
 {
+	if ( Weapons.IsEmpty() )
+		return;
+
+	CurrentWeaponIndex = ( CurrentWeaponIndex + 1 ) % Weapons.Num();
+	EquipWeapon( CurrentWeaponIndex );
 
 }
 
 
 //
-void UUE09WeaponComponent::EquipWeapon() 
+void UUE09WeaponComponent::EquipWeapon(int32 WeaponIndex) 
 {
+	if ( Weapons.IsEmpty() || !Weapons.IsValidIndex(WeaponIndex))
+		return;
+
+	AUE09BaseWeapon* lNewWeapon = Weapons[ WeaponIndex ];
+	if ( !IsValid( lNewWeapon ) )
+		return;
+
+	if ( IsValid(CurrentWeapon) && CurrentWeapon != lNewWeapon )
+	{
+		CurrentWeapon->StopFire();
+		AttachWeaponToSocket( CurrentWeapon, WeaponArmorySocketName );
+
+	}
+
+	CurrentWeapon = lNewWeapon;
+	AttachWeaponToSocket( CurrentWeapon, WeaponSocketName );
+
+	CurrentWeaponIndex = WeaponIndex;
 
 }
 
 
 //
-void UUE09WeaponComponent::AttachWeaponToSocket() 
+void UUE09WeaponComponent::AttachWeaponToSocket( AUE09BaseWeapon* WeaponToEquip, FName SocketName) 
 {
+	auto lCharMesh = Owner->GetMesh();
+
+	if ( !lCharMesh || !WeaponToEquip )
+		return;
+
+	FAttachmentTransformRules lAttachmentRules(EAttachmentRule::SnapToTarget, true);
+	WeaponToEquip->AttachToComponent( lCharMesh, lAttachmentRules, SocketName );
 
 }
 
@@ -106,5 +137,21 @@ void UUE09WeaponComponent::AttachWeaponToSocket()
 //
 void UUE09WeaponComponent::SpawnWeapon() 
 {
+	if (!GetWorld()) return;
+
+	for ( auto lWeaponClass : WeaponClasses )
+	{
+		if ( !lWeaponClass )
+			continue;
+
+		AUE09BaseWeapon* lSpawnedWeapon = GetWorld()->SpawnActor<AUE09BaseWeapon>( lWeaponClass );
+		if ( !lSpawnedWeapon )
+			continue;
+
+		lSpawnedWeapon->SetOwner( Owner );
+		AttachWeaponToSocket( lSpawnedWeapon, WeaponArmorySocketName );
+		Weapons.Add( lSpawnedWeapon );
+
+	}
 
 }
